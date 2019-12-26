@@ -1,11 +1,12 @@
 # Import Libraries
-import pandas as pd 
+import pandas as pd
 import datetime
 import pandas_datareader.data as web
 from pandas import Series, DataFrame
 import matplotlib.pyplot as plt
 from matplotlib import style
 import matplotlib as mpl # Adjust the Size of matplotlib
+import numpy as np
 
 # Define the start and end period
 
@@ -20,7 +21,7 @@ df.tail()
 # Plot the prices
 
 mpl.rc('figure', figsize=(10, 10))
-style.use('fast') # Check styles here: https://matplotlib.org/3.1.1/gallery/style_sheets/style_sheets_reference.html
+style.use('fast')
 df["Adj Close"].plot(label='S&P500')
 plt.legend()
 
@@ -62,7 +63,7 @@ fig = plt.figure()
 ax1 = fig.add_axes([0.5,0.5,1,1])
 cum_returns.plot()
 ax1.set_xlabel("Date")
-ax1.set_ylabel("Growth Rate")
+ax1.set_ylabel("Cumulative Return")
 ax1.set_title("S&P500 Cumulative Daily Returns")
 
 # Mean Daily Returns
@@ -88,6 +89,19 @@ mavg30.plot(label='mavg30')
 mavg50.plot(label='mavg50')
 mavg100.plot(label='mavg100')
 plt.legend()
+
+
+# Plot Simple Moving Averages using xlim
+
+mpl.rc('figure', figsize=(10, 10))
+style.use('fast')
+df["Adj Close"].plot(label='S&P500')
+mavg30.plot(label='mavg30')
+mavg50.plot(label='mavg50')
+mavg100.plot(label='mavg100')
+plt.xlim('2017-01-01','2019-12-25')
+plt.legend()
+
 
 # Plot Simple Moving Averages 30 Days
 
@@ -129,6 +143,16 @@ exp30.plot(label='exp30')
 exp50.plot(label='exp50')
 exp100.plot(label='exp100')
 
+# Plot Exponential Moving Averages using xlim
+
+mpl.rc('figure',figsize=(10,10))
+style.use("fast")
+df["Adj Close"].plot(label="S&P500")
+exp30.plot(label='exp30')
+exp50.plot(label='exp50')
+exp100.plot(label='exp100')
+plt.xlim('2017-01-01','2019-12-25')
+
 # Plot Exponential Moving Averages 30 Days
 
 mpl.rc('figure',figsize=(10,10))
@@ -158,3 +182,41 @@ df["Adj Close"].plot(label="S&P500", color='blue')
 exp100.plot(label='exp100', color='orange')
 plt.xlim('2017-01-01','2019-12-25')
 
+# Import Inflation Data from FRED - Economic Date (only available until end of 2018)
+# Index 1982-1984=100, monthly data
+
+inflation = web.DataReader('CPIAUCSL', 'fred', start, end)
+inflation.tail()
+inflation.head()
+
+monthly_variance = inflation.pct_change()
+monthly_variance.tail()
+
+cum_inflation = (monthly_variance + 1).cumprod()
+cum_inflation.tail()
+
+# S&P500 Monthly Returns
+
+monthly_returns = df['Adj Close'].resample('M').ffill().pct_change()
+cum_returns_monthly = (monthly_returns + 1).cumprod()
+cum_returns_monthly.tail()
+cum_returns.tail()
+
+# Plot Inflation
+
+fig = plt.figure()
+cum_inflation.plot()
+ax1.set_xlabel("Date")
+ax1.set_ylabel("Inflation")
+ax1.set_title("US Cumulative Inflation")
+plt.show()
+
+# Plot Inflation and S&P Returns
+
+fig = plt.figure()
+cum_inflation.plot(color='r')
+cum_returns_monthly.plot(color='b')
+plt.title('S&P500 vs US Inflation')
+ax1.set_xlabel("Date")
+ax1.set_ylabel("Cumulative Growth")
+plt.show()
