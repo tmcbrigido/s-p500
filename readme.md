@@ -36,4 +36,4 @@
 
 ## S&P500 vs US Inflation
 
-![S&P500 vs US Inflation](images/sma_2017.png)
+![S&P500 vs US Inflation](/images/sp_inflation.png)
