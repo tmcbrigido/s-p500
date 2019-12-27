@@ -1,12 +1,10 @@
 # Import Libraries
-import pandas as pd
 import datetime
 import pandas_datareader.data as web
-from pandas import Series, DataFrame
 import matplotlib.pyplot as plt
 from matplotlib import style
 import matplotlib as mpl # Adjust the Size of matplotlib
-import numpy as np
+
 
 # Define the start and end period
 
