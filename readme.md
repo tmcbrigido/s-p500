@@ -16,6 +16,14 @@
 
 ![S&P500 - Histogram](/images/histogram.png)
 
+## S&P500 Hitorical Annual Returns
+
+![S&P500 - Annual Returns Returns](/images/annual_returns.png)
+
+## S&P Historical Monthly Returns
+
+![S&P500 - Monthly Returns](/images/monthly_returns.png)
+
 ## S&P500 Cumulative Returns
 
 ![S&P500 - Cumulative Returns](/images/cumulative_returns.png)
