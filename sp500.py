@@ -220,3 +220,50 @@ plt.title('S&P500 vs US Inflation')
 ax1.set_xlabel("Date")
 ax1.set_ylabel("Cumulative Growth")
 plt.show()
+
+# Get Yearly Returns Returns
+
+daily_returns.tail()
+monthly_returns.tail()
+
+yearly_returns = df['Adj Close'].resample('y').ffill().pct_change()
+
+yearly_returns.tail()
+
+cum_returns.tail()
+
+cum_yearly = (yearly_returns + 1).cumprod()
+
+cum_yearly.tail()
+
+# Plot Yearly Returns
+
+fig = plt.figure()
+yearly_returns.plot(kind='bar',figsize=(6,6), color="b")
+plt.title('S&P500 Annual Return')
+ax1.set_ylabel("Annual Return")
+plt.show()
+
+
+# Histogram
+
+fig = plt.figure()
+ax1 = fig.add_axes([0.8,0.8,1,1])
+yearly_returns.plot.hist(bins=30)
+ax1.set_xlabel("Yearly Returns %")
+ax1.set_ylabel("Percent")
+ax1.set_title("S&P500 Yearly Returns")
+plt.show()
+
+# Group the Returns per month
+
+avg_month = monthly_returns.groupby([monthly_returns.index.month], as_index=True).mean()
+
+# Plot Returns per month
+
+fig = plt.figure()
+avg_month.plot(kind='bar',figsize=(6,6), color="g")
+plt.title('S&P500 Monthly Return')
+ax1.set_ylabel("Monthly Return")
+plt.show()
+
