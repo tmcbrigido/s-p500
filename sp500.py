@@ -98,7 +98,7 @@ plt.show()
 
 fig = plt.figure()
 ax1 = fig.add_axes([0.8,0.8,1,1])
-yearly_returns.plot.hist(bins=30)
+yearly_returns.plot.hist(bins=80)
 ax1.set_xlabel("Yearly Returns %")
 ax1.set_ylabel("Percent")
 ax1.set_title("S&P500 Yearly Returns")
