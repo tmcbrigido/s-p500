@@ -28,6 +28,8 @@ plt.legend()
 daily_returns = df["Adj Close"].pct_change()
 daily_returns.tail()
 
+monthly_returns = df['Adj Close'].resample('M').ffill().pct_change()
+
 # Plot Daily Returns
 
 fig = plt.figure()
@@ -73,7 +75,7 @@ print(daily_returns.mean())
 daily_returns.tail()
 monthly_returns.tail()
 
-yearly_returns = df['Adj Close'].resample('y').ffill().pct_change()
+yearly_returns = df['Adj Close'].resample('Y').ffill().pct_change()
 
 yearly_returns.tail()
 
